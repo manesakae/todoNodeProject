@@ -6,5 +6,10 @@ const TodoSchema = mongoose.Schema({
 },
 {timestamps: true}
 );
-
+TodoSchema.virtual('id').get(function() {
+    return this._id;
+});
+TodoSchema.set('toJSON', {
+    virtuals: true
+});
 module.exports = mongoose.model("Todos", TodoSchema);
