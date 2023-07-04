@@ -22,13 +22,24 @@ module.exports.addTodo = async (req, res, next) => {
 module.exports.updateTodo = async (req, res, next) => {
     try {
         let todo = req.body;
-        const todo_id = req.param;
-
+        const {id} = req.params;
         const results = await todoModel.updateOne(
-            {id: todo_id},
+            {_id: id},
             {
                 $set: todo
             }
+            );
+        res.json({success: true, results}); 
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports.deleteTodo = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const results = await todoModel.deleteOne(
+            {_id: id}
             );
         res.json({success: true, results}); 
     } catch (error) {
